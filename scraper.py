@@ -8,8 +8,9 @@ with open('hrefs.txt', 'w') as file:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        parent_links = soup.find_all('div', class_='full-width artdeco-entity-lockup__title ember-view')
-        for parent_link in parent_links:
-            children = parent_link.find('a',class_="disabled ember-view job-card-container__link job-card-list__title")
-            href_value = "https://www.linkedin.com/" + children.get('href')
+        parent_links = soup.find('a', class_="disabled ember-view job-card-container__link job-card-list__title")
+        if parent_links:
+            href_value=parent_links.get('href')
             file.write(href_value + '\n')
+        else:
+            print("None")
