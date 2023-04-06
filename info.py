@@ -24,13 +24,25 @@ for url in urls:
              # college_text=''
         University = soup.find('ul',class_="flex flex-col bg-gray-100 pt-8 rounded-r-2xl text-sm text-gray-500").find('li', title='Accreditation').text.strip()
         owenership_type=soup.find('ul',class_="flex flex-col bg-gray-100 pt-8 rounded-r-2xl text-sm text-gray-500").find('li',title="Ownership").text.strip()
-        data={
+        phone_contact=soup.find('ul',class_="flex flex-col bg-gray-100 pt-8 rounded-r-2xl text-sm text-gray-500").find('li',title="Phone").text.strip()
+        email_contact=soup.find('ul',class_="flex flex-col bg-gray-100 pt-8 rounded-r-2xl text-sm text-gray-500").find('li',title="Email").text.strip()
+        location=soup.find('div',class_="text-base md:text-xl text-gray-600 leading-5 mb-2").text.strip()
+        course_offered=soup.find_all('div',class_="flex justify-between mb-1")
+        course_list = []
+        for course in course_offered:
+            course_list.append(course.find('a').text.strip())
+            data={
                'College':h1.split('\n')[0],
-                'University':University,
-                'Ownership Type':owenership_type
+               'Location':location,
+               'University':University,
+               'Course Offered':', '.join(course_list),
+               'Ownership Type':owenership_type,
+               'Phone Number':phone_contact,
+               'Email':email_contact,
+                
         }
 
         datalist.append(data)
         #print(data)
 df=pd.DataFrame(datalist)
-df.to_csv('college.csv',index=True)
+df.to_csv('college2.csv',index=True)
