@@ -22,7 +22,9 @@ for url in urls:
         if accreditation_ul:
             accreditation_li = accreditation_ul.find('li', title='Accreditation')
             if accreditation_li:
-                University = accreditation_li.find('span').text.strip()
+                University_li = accreditation_li.find('a')
+                if University_li:
+                     University=University_li.text.strip()
 
         ownership_type=None
         ownership = soup.find('ul',class_="flex flex-col bg-gray-100 pt-8 rounded-r-2xl text-sm text-gray-500 grid grid-cols-2 mt-4")
